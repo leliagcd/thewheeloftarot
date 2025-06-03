@@ -1,0 +1,104 @@
+const images = [
+  '11.png.png',
+  '12.png.png',
+  '13.png.png',
+  '14.png.png',
+  '15.png.png',
+  '16.png.png',
+  '17.png.png',
+  '18.png.png',
+  '19.png.png',
+  '110.png.png',
+  '111.png.png',
+  '112.png.png',
+  '113.png.png',
+  '114.png.png',
+  '115.png.png',
+  '116.png.png',
+  '117.png.png',
+  '118.png.png',
+  '119.png.png',
+  '120.png.png',
+  '121.png.png',
+  '122.png.png',
+  '111.png.png',
+  '12.png.png',
+];
+
+const texts = [
+  "Leap, but look first. Not every risk is worth taking. Step forward, but with awareness.",
+  "You already have what you need. Use your intelligence and skills to shape your reality today.",
+  "Not everything should be said out loud. Hold onto your secrets; intuition is your power.",
+  "Control creates growth. Structure your life with care—discipline leads to abundance.",
+  "Lead with authority, not fear. True power is steady, not forceful. Own your space.",
+  "There’s wisdom in the past. Look to tradition, but don’t let it cage you. Learn, then evolve.",
+  "Move forward. No hesitations. Victory comes to those who stay in control of their direction.",
+  "Endurance beats brute force. Stay steady, even when you feel like breaking. You are unshakable.",
+  "Silence is where answers live. Step away from the noise. Your own wisdom is waiting.",
+  "Nothing stays the same. Accept the shift. Today’s loss is tomorrow’s opportunity.",
+  "Truth has weight. Make decisions that won’t haunt you later. Fairness isn’t always easy.",
+  "Let go of control. Sometimes surrender is the only way to move forward.",
+  "Burn it down so you can rebuild. Endings hurt, but they make space for something better.",
+  "Find the balance between extremes. One step at a time. Rushing ruins everything.",
+  "What owns you? Break the habits, the obsessions, the fears. You are not trapped.",
+  "Let it fall. When things collapse, don’t resist. This destruction is your rebirth.",
+  "Hope is quiet, but powerful. Trust the light ahead, even if you can’t see the full path.",
+  "Your mind is playing tricks on you. Not everything is as it seems. Trust your instincts.",
+  "Step into the light. This is your moment. Own your joy without apology.",
+  "Rise up. This is your awakening. You know what needs to change—do it now.",
+  "You’ve made it. Celebrate your success, but don’t stop growing. There’s more ahead."
+];
+
+const imgElement = document.getElementById('rotating-img');
+const textElement = document.getElementById('moving-text');
+
+function setHourlyContent() {
+  const hour = new Date().getHours();
+  const imgIndex = hour < images.length ? hour : 0;
+  imgElement.src = images[imgIndex];
+  textElement.textContent = texts[hour] || "";
+}
+
+setHourlyContent();
+
+let posX = Math.random() * (window.innerWidth - 100);
+let posY = Math.random() * (window.innerHeight - 30);
+let targetX = Math.random() * (window.innerWidth - 100);
+let targetY = Math.random() * (window.innerHeight - 30);
+const speed = 0.02;
+
+function animate() {
+  posX += (targetX - posX) * speed;
+  posY += (targetY - posY) * speed;
+  textElement.style.transform = `translate(${posX}px, ${posY}px)`;
+
+  if (Math.abs(posX - targetX) < 1 && Math.abs(posY - targetY) < 1) {
+    targetX = Math.random() * (window.innerWidth - textElement.offsetWidth);
+    targetY = Math.random() * (window.innerHeight - textElement.offsetHeight);
+  }
+
+  requestAnimationFrame(animate);
+  const hourDisplay = document.getElementById('hour-display');
+
+  
+  }
+  
+
+
+
+
+animate();
+
+setInterval(() => {
+  const now = new Date();
+  if (now.getMinutes() === 0 && now.getSeconds() === 0) {
+    setHourlyContent();
+  }
+}, 1000);
+
+window.addEventListener('resize', () => {
+  targetX = Math.min(targetX, window.innerWidth - textElement.offsetWidth);
+  targetY = Math.min(targetY, window.innerHeight - textElement.offsetHeight);
+});
+
+
